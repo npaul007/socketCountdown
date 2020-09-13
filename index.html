@@ -11,24 +11,41 @@
     }
 </style>
 <body>
-    <div style="display: flex;">
-        <div>
-            <label for="hour">hour</label><br>
-            <input type="text" name="hour" value="0">
+    <form name="countdownForm">
+        <div style="display: flex;">
+            <div>
+                <label for="hour">hour</label><br>
+                <input type="text" name="hour" value="00" maxlength="2" minlength="2">
+            </div>
+            :
+            <div>
+                <label for="minute">minute</label><br>
+                <input type="text" name="minute" value="00" maxlength="2" minlength="2">
+            </div>
+            :
+            <div>
+                <label for="second">second</label><br>
+                <input type="text" name="second" value="00" maxlength="2" minlength="2">
+            </div>
         </div>
-        :
-        <div>
-            <label for="minute">minute</label><br>
-            <input type="text" name="minute" value="0">
-        </div>
-        :
-        <div>
-            <label for="second">second</label><br>
-            <input type="text" name="second" value="0">
-        </div>
-    </div>
+        <br>
+        <input type="submit" name="start" value="start"/>
+        <button name="reset">Reset</button>
+    </form>
     <h1 id="time">00:00:00</h1>
-    <button>Start</button>
-    <button>Reset</button>
 </body>
+<script>
+    let hourInput = document.querySelector('input[name="hour"]');
+    let minuteInput = document.querySelector('input[name="minute"]');
+    let secondInput = document.querySelector('input[name="second"]');
+
+    let curTime = document.getElementById('time');
+
+    hourInput.addEventListener('change', function(event) {
+        let time = curTime.textContent;
+        let newTime = `${this.value}${time.substring(2,time.length)}`;        
+        curTime.textContent = newTime;
+    });
+    
+</script>
 </html>
