@@ -1,5 +1,6 @@
 const http  = require('http');
 const url = require('url');
+const fs = require('fs');
 const PORT = 3000;
 
 let server = http.createServer(function(request,response) {
@@ -11,11 +12,10 @@ let server = http.createServer(function(request,response) {
     response.end(index);
 });
 
-server.data = data;
 
 server.listen(PORT,'localhost', function() {
     console.log(`Bible API Server listening on port ${PORT}`);
-});}
+});
 
 
 

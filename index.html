@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    input[type="text"] {
+        width: 50px;
+    }
+</style>
+<body>
+    <div style="display: flex;">
+        <div>
+            <label for="hour">hour</label><br>
+            <input type="text" name="hour" value="0">
+        </div>
+        :
+        <div>
+            <label for="minute">minute</label><br>
+            <input type="text" name="minute" value="0">
+        </div>
+        :
+        <div>
+            <label for="second">second</label><br>
+            <input type="text" name="second" value="0">
+        </div>
+    </div>
+    <h1 id="time">00:00:00</h1>
+    <button>Start</button>
+    <button>Reset</button>
+</body>
+</html>
