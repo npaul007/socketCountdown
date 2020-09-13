@@ -17,12 +17,10 @@
                 <label for="hour">hour</label><br>
                 <input type="text" name="hour" value="00" maxlength="2" minlength="2">
             </div>
-            :
             <div>
                 <label for="minute">minute</label><br>
                 <input type="text" name="minute" value="00" maxlength="2" minlength="2">
             </div>
-            :
             <div>
                 <label for="second">second</label><br>
                 <input type="text" name="second" value="00" maxlength="2" minlength="2">
@@ -44,6 +42,18 @@
     hourInput.addEventListener('change', function(event) {
         let time = curTime.textContent;
         let newTime = `${this.value}${time.substring(2,time.length)}`;        
+        curTime.textContent = newTime;
+    });
+
+    minuteInput.addEventListener('change', function(event) {
+        let time = curTime.textContent;
+        let newTime = `${time.substring(0,3)}${this.value}${time.substring(5,time.length)}`;        
+        curTime.textContent = newTime;
+    });
+
+    secondInput.addEventListener('change', function(event) {
+        let time = curTime.textContent;
+        let newTime = `${time.substring(0,time.length-2)}${this.value}`;        
         curTime.textContent = newTime;
     });
     
