@@ -36,32 +36,35 @@
     let hourInput = document.querySelector('input[name="hour"]');
     let minuteInput = document.querySelector('input[name="minute"]');
     let secondInput = document.querySelector('input[name="second"]');
-
     let curTime = document.getElementById('time');
 
-    hourInput.addEventListener('change', function(event) {
+    let hourCB = function(event) {
         if( this.value.length == 2 ) {
             let time = curTime.textContent;
             let newTime = `${this.value}${time.substring(2,time.length)}`;        
             curTime.textContent = newTime;
         }
-    });
+    };
 
-    minuteInput.addEventListener('change', function(event) {
+    let minuteCB = function(event) {
         if( this.value.length == 2 ) {
             let time = curTime.textContent;
             let newTime = `${time.substring(0,3)}${this.value}${time.substring(5,time.length)}`;        
             curTime.textContent = newTime;
         }
-    });
+    };
 
-    secondInput.addEventListener('change', function(event) {
+    let secondCB = function(event) {
         if( this.value.length == 2 ) {
             let time = curTime.textContent;
             let newTime = `${time.substring(0,time.length-2)}${this.value}`;        
             curTime.textContent = newTime;
         }
-    });
+    };
+
+    hourInput.addEventListener('change', hourCB);
+    minuteInput.addEventListener('change', minuteCB);
+    secondInput.addEventListener('change', secondCB);
     
 </script>
 </html>
