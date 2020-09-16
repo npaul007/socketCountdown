@@ -33,6 +33,8 @@
     <h1 id="time">00:00:00</h1>
 </body>
 <script>
+    let resetButton = document.querySelector('button[name="reset"]');
+
     let hourInput = document.querySelector('input[name="hour"]');
     let minuteInput = document.querySelector('input[name="minute"]');
     let secondInput = document.querySelector('input[name="second"]');
@@ -62,9 +64,19 @@
         }
     };
 
+    let resetCB = function(event) {
+        hourInput.value == "00";
+        minuteInput.value == "00";
+        secondInput.value == "00";
+    };
+
+    resetButton.addEventListener("click",resetCB);
+
     hourInput.addEventListener('change', hourCB);
     minuteInput.addEventListener('change', minuteCB);
     secondInput.addEventListener('change', secondCB);
+
+
     
 </script>
 </html>
