@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Countdown Timer Web Sockets</title>
 </head>
 <style>
     input[type="text"] {
@@ -40,21 +40,27 @@
     let curTime = document.getElementById('time');
 
     hourInput.addEventListener('change', function(event) {
-        let time = curTime.textContent;
-        let newTime = `${this.value}${time.substring(2,time.length)}`;        
-        curTime.textContent = newTime;
+        if( this.value.length == 2 ) {
+            let time = curTime.textContent;
+            let newTime = `${this.value}${time.substring(2,time.length)}`;        
+            curTime.textContent = newTime;
+        }
     });
 
     minuteInput.addEventListener('change', function(event) {
-        let time = curTime.textContent;
-        let newTime = `${time.substring(0,3)}${this.value}${time.substring(5,time.length)}`;        
-        curTime.textContent = newTime;
+        if( this.value.length == 2 ) {
+            let time = curTime.textContent;
+            let newTime = `${time.substring(0,3)}${this.value}${time.substring(5,time.length)}`;        
+            curTime.textContent = newTime;
+        }
     });
 
     secondInput.addEventListener('change', function(event) {
-        let time = curTime.textContent;
-        let newTime = `${time.substring(0,time.length-2)}${this.value}`;        
-        curTime.textContent = newTime;
+        if( this.value.length == 2 ) {
+            let time = curTime.textContent;
+            let newTime = `${time.substring(0,time.length-2)}${this.value}`;        
+            curTime.textContent = newTime;
+        }
     });
     
 </script>
