@@ -33,8 +33,11 @@
     <h1 id="time">00:01:05</h1>
 </body>
 <script>
-    window.on = false;
-    window.timerInterval = null;
+    window.timer = {
+        on:false,
+        timerInterval:null,
+        timeLeft:null
+    }
 
     let resetButton = document.querySelector('button[name="reset"]');
     let form = document.querySelector('form[name="countdownForm"]');
@@ -92,20 +95,35 @@
         return ms;
     }
 
-    let startTimer = function () {
-        window.on = true;
-
-        let hours = Number(hourInput.value);
-        let minutes = Number(minuteInput.value);
-        let seconds = Number(secondInput.value);
+    let displayTime = function(timeLeft) {
         
-        let ms = getMilli(hours,'h') +  getMilli(minutes,'m') + getMilli(seconds,'s');
-        console.log(ms);
+        curTime.textContent = `${hoursDisplay}:${minutesDisplay}:${secondsDisplay}`;
+    }
+
+    let startTimer = function () {
+        window.timer.on = true;
+        
+        window.timer.timeLeft =  (
+            getMilli(Number(hourInput.value),'h') +  
+            getMilli(Number(minuteInput.value),'m') + 
+            getMilli(Number(secondInput.value),'s')
+        );
+
+        window.timer.timerInterval = setInterval(() => {
+            window.timer.timeLeft -= 1000;
+
+            displayTime(window.timer.timeLeft);
+
+            if( window.timer.timeLeft <= 0 ) {
+                clearInterval(window.timer.timerInterval);
+                window.timer.timerInterval = null;
+            }
+        }, 1000);
     }
 
     let formSubmitCB = function (event) {
         event.preventDefault();
-        if( window.on === false ) {
+        if( window.timer.on === false ) {
             startTimer();
         }
         else {
