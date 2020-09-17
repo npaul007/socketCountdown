@@ -11,7 +11,7 @@
     }
 </style>
 <body>
-    <div>
+    <form name="countdownForm">
         <div style="display: flex;">
             <div>
                 <label for="hour">hour</label><br>
@@ -27,7 +27,7 @@
             </div>
         </div>
         <br>
-        <button name="start">Start</button>
+        <input type="submit" name="start" value="start"/>
         <button name="reset">Reset</button>
     </form>
     <h1 id="time">00:01:05</h1>
@@ -40,7 +40,7 @@
     }
 
     let resetButton = document.querySelector('button[name="reset"]');
-    let start = document.querySelector('button[name="start"]');
+    let form = document.querySelector('form[name="countdownForm"]');
 
     let hourInput = document.querySelector('input[name="hour"]');
     let minuteInput = document.querySelector('input[name="minute"]');
@@ -100,12 +100,10 @@
         return ms;
     }
 
-    let getDoubledDigit = function ( value ) {
-        // let s = String(value);
-        // if( s.length < 2 ) {
-        //     s  = `0${s}`;
-        // }
-        // return s;
+    let getDouble = function (value) {
+        if ( value < 10 ) {
+            return `0${value}`;
+        }
         return value;
     }
 
@@ -122,8 +120,7 @@
         
         let secondsDisplay = ( timeLeft > 0 ) ? ( timeLeft / 1000 ) : 0;
 
-
-        curTime.textContent = `${getDoubledDigit(hoursDisplay)}:${getDoubledDigit(minutesDisplay)}:${getDoubledDigit(minutesDisplay)}`;
+        curTime.textContent = `${getDouble(hoursDisplay)}:${getDouble(minutesDisplay)}:${getDouble(secondsDisplay)}`;
     }
 
     let startTimer = function () {
@@ -159,7 +156,7 @@
     }
 
     resetButton.addEventListener("click",resetCB);
-    start.addEventListener("click",formSubmitCB);
+    form.addEventListener("submit",formSubmitCB);
 
     hourInput.addEventListener('change', hourCB);
     minuteInput.addEventListener('change', minuteCB);
