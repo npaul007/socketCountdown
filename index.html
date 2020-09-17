@@ -19,21 +19,25 @@
             </div>
             <div>
                 <label for="minute">minute</label><br>
-                <input type="text" name="minute" value="00" maxlength="2" minlength="2">
+                <input type="text" name="minute" value="01" maxlength="2" minlength="2">
             </div>
             <div>
                 <label for="second">second</label><br>
-                <input type="text" name="second" value="00" maxlength="2" minlength="2">
+                <input type="text" name="second" value="05" maxlength="2" minlength="2">
             </div>
         </div>
         <br>
         <input type="submit" name="start" value="start"/>
         <button name="reset">Reset</button>
     </form>
-    <h1 id="time">00:00:00</h1>
+    <h1 id="time">00:01:05</h1>
 </body>
 <script>
+    window.on = false;
+    window.timerInterval = null;
+
     let resetButton = document.querySelector('button[name="reset"]');
+    let form = document.querySelector('form[name="countdownForm"]');
 
     let hourInput = document.querySelector('input[name="hour"]');
     let minuteInput = document.querySelector('input[name="minute"]');
@@ -70,13 +74,50 @@
         secondInput.value == "00";
     };
 
+    let getMilli = function (value,type) {
+        let ms;
+
+        switch(type) {
+            case 'h':
+                ms = value *1000 * 60 * 60;
+                break;
+            case 'm':
+                ms = value * 1000 * 60;
+                break;
+            case 's':
+                ms = 1000 * value;
+                break;
+        }
+
+        return ms;
+    }
+
+    let startTimer = function () {
+        window.on = true;
+
+        let hours = Number(hourInput.value);
+        let minutes = Number(minuteInput.value);
+        let seconds = Number(secondInput.value);
+        
+        let ms = getMilli(hours,'h') +  getMilli(minutes,'m') + getMilli(seconds,'s');
+        console.log(ms);
+    }
+
+    let formSubmitCB = function (event) {
+        event.preventDefault();
+        if( window.on === false ) {
+            startTimer();
+        }
+        else {
+            stopTimer();
+        }
+    }
+
     resetButton.addEventListener("click",resetCB);
+    form.addEventListener("submit",formSubmitCB);
 
     hourInput.addEventListener('change', hourCB);
     minuteInput.addEventListener('change', minuteCB);
     secondInput.addEventListener('change', secondCB);
-
-
-    
 </script>
 </html>
