@@ -19,18 +19,18 @@
             </div>
             <div>
                 <label for="minute">minute</label><br>
-                <input type="text" name="minute" value="01" maxlength="2" minlength="2">
+                <input type="text" name="minute" value="00" maxlength="2" minlength="2">
             </div>
             <div>
                 <label for="second">second</label><br>
-                <input type="text" name="second" value="05" maxlength="2" minlength="2">
+                <input type="text" name="second" value="00" maxlength="2" minlength="2">
             </div>
         </div>
         <br>
         <input type="submit" name="start" value="start"/>
         <button name="reset">Reset</button>
     </form>
-    <h1 id="time">00:01:05</h1>
+    <h1 id="time">00:00:00</h1>
 </body>
 <script>
     window.timer = {
@@ -72,14 +72,14 @@
     };
 
     let resetCB = function(event) {
-        hourInput.value == "00";
-        minuteInput.value == "00";
-        secondInput.value == "00";
-
         clearInterval(window.timer.timerInterval);
         window.timer.timerInterval = null;
         window.timer.on = false;
         window.timer.timeLeft = 0;
+
+        hourInput.value == "00";
+        minuteInput.value == "00";
+        secondInput.value == "00";
     };
 
     let getMilli = function (value,type) {
@@ -146,12 +146,15 @@
     }
 
     let formSubmitCB = function (event) {
-        event.preventDefault();
-        if( window.timer.on === false ) {
-            startTimer();
-        }
-        else {
-            stopTimer();
+        if( event.submitter.attributes.name.value == "start") {
+            event.preventDefault();
+         
+            if( window.timer.on === false ) {
+                startTimer();
+            }
+            else {
+                stopTimer();
+            }
         }
     }
 
