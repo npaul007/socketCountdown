@@ -40,6 +40,7 @@
     }
 
     let resetButton = document.querySelector('button[name="reset"]');
+    let submitButton = document.querySelector('input[name="start"]');
     let form = document.querySelector('form[name="countdownForm"]');
 
     let hourInput = document.querySelector('input[name="hour"]');
@@ -80,7 +81,13 @@
         hourInput.value == "00";
         minuteInput.value == "00";
         secondInput.value == "00";
+        submitButton.value = "start";
     };
+
+    let stopTimer = function () {
+        submitButton.value = "start";
+        window.timer.on = false;
+    }
 
     let getMilli = function (value,type) {
         let ms;
@@ -125,24 +132,30 @@
 
     let startTimer = function () {
         window.timer.on = true;
+
+        submitButton.value = "stop";
         
-        window.timer.timeLeft =  (
-            getMilli(Number(hourInput.value),'h') +  
-            getMilli(Number(minuteInput.value),'m') + 
-            getMilli(Number(secondInput.value),'s')
-        );
+        if( window.timer.timerInterval == null ) {
+            window.timer.timeLeft =  (
+                getMilli(Number(hourInput.value),'h') +  
+                getMilli(Number(minuteInput.value),'m') + 
+                getMilli(Number(secondInput.value),'s')
+            );
 
-        window.timer.timerInterval = setInterval(() => {
-            window.timer.timeLeft -= 1000;
+            window.timer.timerInterval = setInterval(() => {
+                if( window.timer.on === true ) {
+                    window.timer.timeLeft -= 1000;
 
-            displayTime(window.timer.timeLeft);
+                    displayTime(window.timer.timeLeft);
 
-            if( window.timer.timeLeft <= 0 ) {
-                clearInterval(window.timer.timerInterval);
-                window.timer.timerInterval = null;
-                window.timer.on = false;
-            }
-        }, 1000);
+                    if( window.timer.timeLeft <= 0 ) {
+                        clearInterval(window.timer.timerInterval);
+                        window.timer.timerInterval = null;
+                        window.timer.on = false;
+                    }
+                }
+            }, 1000);
+        }
     }
 
     let formSubmitCB = function (event) {
