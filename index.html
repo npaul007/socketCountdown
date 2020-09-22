@@ -25,6 +25,10 @@
                 <label for="second">second</label><br>
                 <input type="text" name="second" value="00" maxlength="2" minlength="2">
             </div>
+            <div>
+                <label for="channel">channel</label>
+                <input type="text" name="channel" required value="foo">
+            </div>
         </div>
         <br>
         <input type="submit" name="start" value="start"/>
@@ -38,7 +42,7 @@
         timerInterval:null,
         timeLeft:null
     }
-
+    
     let resetButton = document.querySelector('button[name="reset"]');
     let submitButton = document.querySelector('input[name="start"]');
     let form = document.querySelector('form[name="countdownForm"]');
@@ -46,7 +50,32 @@
     let hourInput = document.querySelector('input[name="hour"]');
     let minuteInput = document.querySelector('input[name="minute"]');
     let secondInput = document.querySelector('input[name="second"]');
+    let channelInput = document.querySelector('input[name="channel"]');
     let curTime = document.getElementById('time');
+
+    let url = 'ws://localhost:3000';
+    let socket = new WebSocket(url);
+
+    socket.onopen = function () {
+        console.log(`Socket opened to ${url}`);
+    }
+
+    socket.onmessage = function (message) {
+        console.log(`Received message => ${message} from server`);
+    }
+
+    socket.keepAlive = setInterval(() => {
+        socket.readyState == 1 && socket.send("keepAlive");
+    }, 1000);
+
+    let sendTimeToChannel = function (displayedTime) {
+        let jsonObj = {
+            channel:channelInput.value,
+            displayedTime:displayedTime
+        };
+
+        socket.readyState == 1 && socket.send(JSON.stringify(jsonObj));
+    }
 
     let hourCB = function(event) {
         if( this.value.length == 2 ) {
@@ -128,6 +157,8 @@
         let secondsDisplay = ( timeLeft > 0 ) ? ( timeLeft / 1000 ) : 0;
 
         curTime.textContent = `${getDouble(hoursDisplay)}:${getDouble(minutesDisplay)}:${getDouble(secondsDisplay)}`;
+
+        sendTimeToChannel(curTime.textContent);
     }
 
     let startTimer = function () {
